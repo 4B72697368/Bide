@@ -84,7 +84,7 @@ const StarfieldBackground = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  });
+  }, [animate, createStars, handleResize]);
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden">
