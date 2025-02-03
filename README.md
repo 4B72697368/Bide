@@ -24,6 +24,10 @@ At first, I used github api only and tried making a wrapper on codespaces.
 
 Then I realized they don't give enough control on that so I tried to use firestore to store codespace.
 
+So, I scrapped that and started using Firestore to host the codespace.
+
+Since then, I've been building and adding more features to it.
+
 ## Right Now,
 
 It provides fast setup through a single-sign-on with github.
