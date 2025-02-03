@@ -170,6 +170,8 @@ const Codespace: NextPage = () => {
                     setToken(session.accessToken);
                     setLoading(false);
                 }
+            } else if(status === 'loading') {
+                return
             } else {
                 redirect('/login')
             }
