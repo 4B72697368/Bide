@@ -77,6 +77,7 @@ const Editor: React.FC<EditorProps> = ({
                 activeTab: validActiveTab
             };
         } catch (error) {
+            console.log("an error occured: " + error)
             localStorage.removeItem(`${repo_name}-${codespace_name}-tabs`);
             localStorage.removeItem(`${repo_name}-${codespace_name}-activeTab`);
             return { tabs: [], activeTab: 0 };
@@ -112,61 +113,26 @@ const Editor: React.FC<EditorProps> = ({
                 return;
             }
 
-            try {
-                const content = await getFileContent(db, username, repo_name, codespace_name, selectedFile);
-                onContentChange(content);
+            const content = await getFileContent(db, username, repo_name, codespace_name, selectedFile);
+            onContentChange(content);
 
-                setTabs(prev => {
-                    const updatedTabs = [...prev, { file: selectedFile, content, unsaved: false }];
-                    return updatedTabs;
-                });
-                setActiveTab(tabs.length);
-            } catch (error) { }
+            setTabs(prev => {
+                const updatedTabs = [...prev, { file: selectedFile, content, unsaved: false }];
+                return updatedTabs;
+            });
+            setActiveTab(tabs.length);
         };
 
         loadFileContent();
-    }, [selectedFile, db, repo_name, codespace_name]);
+    }, [selectedFile, db, repo_name, codespace_name, tabs, token, onContentChange]);
 
     useEffect(() => {
-        const handleKeyDown = async (e: KeyboardEvent) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-                e.preventDefault();
-                await handleSave();
-            }
-        };
+        const handleSave = async () => {
+            if (activeTab === -1 || !tabs[activeTab]) return;
 
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [activeTab, tabs]);
+            const currentTab = tabs[activeTab];
+            const username = await getUserName(token);
 
-    const handleEditorDidMount = (editor: any) => {
-        editorRef.current = editor;
-    };
-
-    const handleEditorChange = (value: string | undefined) => {
-        if (value) {
-            onContentChange(value);
-        }
-        if (!value || activeTab === -1) return;
-
-        setTabs(prev => {
-            const newTabs = [...prev];
-            newTabs[activeTab] = {
-                ...newTabs[activeTab],
-                content: value,
-                unsaved: value !== newTabs[activeTab].content
-            };
-            return newTabs;
-        });
-    };
-
-    const handleSave = async () => {
-        if (activeTab === -1 || !tabs[activeTab]) return;
-
-        const currentTab = tabs[activeTab];
-        const username = await getUserName(token);
-
-        try {
             const docRef = doc(
                 db,
                 'Users',
@@ -191,7 +157,38 @@ const Editor: React.FC<EditorProps> = ({
             });
 
             await reloadTree();
-        } catch (error) { }
+        };
+
+        const handleKeyDown = async (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                await handleSave();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [activeTab, tabs, codespace_name, db, reloadTree, repo_name, token]);
+
+    const handleEditorDidMount = (editor: any) => {
+        editorRef.current = editor;
+    };
+
+    const handleEditorChange = (value: string | undefined) => {
+        if (value) {
+            onContentChange(value);
+        }
+        if (!value || activeTab === -1) return;
+
+        setTabs(prev => {
+            const newTabs = [...prev];
+            newTabs[activeTab] = {
+                ...newTabs[activeTab],
+                content: value,
+                unsaved: value !== newTabs[activeTab].content
+            };
+            return newTabs;
+        });
     };
 
     const handleTabClose = (index: number) => {

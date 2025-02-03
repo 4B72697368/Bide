@@ -49,10 +49,10 @@ const Explorer = (
     return (
         <div className="h-screen w-1/5 flex bg-[#181818] border-r border-gray-700 flex-col overflow-x-auto">
             <div className="bg-[#161616] border-b border-gray-700 p-4 flex justify-between">
-                <Home onClick={(e) => { redirect('/') }} className="cursor-pointer w-5 h-5 text-gray-400" />
-                <FolderCode onClick={(e) => { setTab(0) }} className={`${tab == 0 ? 'text-white' : ''} cursor-pointer w-5 h-5 text-gray-400`} />
-                <BotMessageSquare onClick={(e) => { setTab(1) }} className={`${tab == 1 ? 'text-white' : ''} cursor-pointer w-5 h-5 text-gray-400`} />
-                <GitCommitHorizontal onClick={(e) => { setTab(2) }} className={`${tab == 2 ? 'text-white' : ''} cursor-pointer w-5 h-5 text-gray-400`} />
+                <Home onClick={() => { redirect('/') }} className="cursor-pointer w-5 h-5 text-gray-400" />
+                <FolderCode onClick={() => { setTab(0) }} className={`${tab == 0 ? 'text-white' : ''} cursor-pointer w-5 h-5 text-gray-400`} />
+                <BotMessageSquare onClick={() => { setTab(1) }} className={`${tab == 1 ? 'text-white' : ''} cursor-pointer w-5 h-5 text-gray-400`} />
+                <GitCommitHorizontal onClick={() => { setTab(2) }} className={`${tab == 2 ? 'text-white' : ''} cursor-pointer w-5 h-5 text-gray-400`} />
             </div>
 
             {tab == 0 && <div className="w-full overflow-y-auto">

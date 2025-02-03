@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
       authorization: {
         params: {
           scope: 'repo'
@@ -21,7 +21,9 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken;
+      if (session) {
+        session.accessToken = token.accessToken as string;
+      }
       return session;
     },
   },
@@ -30,6 +32,3 @@ export const authOptions = {
     error: '/login/error',
   },
 };
-
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };

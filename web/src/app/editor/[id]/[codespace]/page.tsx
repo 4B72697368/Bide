@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { redirect, useParams } from 'next/navigation';
 
@@ -22,7 +23,7 @@ import { Editor } from './editor';
 
 import { ExecuteOutput } from './execute';
 
-const Codespace = () => {
+const Codespace: NextPage = () => {
     const params = useParams();
     const repo_name = params.id as string;
     const codespace_name = params.codespace as string;
@@ -163,7 +164,7 @@ const Codespace = () => {
                         setFileTree(tree);
                     }
                 } catch (err) {
-                    setError("An error occurred");
+                    setError("An error occurred: " + err);
                     setLoading(false);
                 } finally {
                     setToken(session.accessToken);
@@ -175,7 +176,7 @@ const Codespace = () => {
         }
 
         fetchExplorer();
-    }, [status, session, repo_name, codespace_name]);
+    }, [status, session, repo_name, codespace_name, db, error]);
 
     if (loading) {
         return <LoadingOverlay />;
@@ -265,5 +266,4 @@ const Codespace = () => {
     );
 };
 
-export { Codespace };
 export default Codespace;

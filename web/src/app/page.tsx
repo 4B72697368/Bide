@@ -36,7 +36,6 @@ function HomePage() {
           });
           const data = await response.json();
           setProjects(data);
-        } catch (error) {
         } finally {
           setIsLoading(false);
         }
@@ -131,5 +130,4 @@ function HomePage() {
   );
 }
 
-export { HomePage };
 export default HomePage;

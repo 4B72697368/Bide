@@ -45,7 +45,6 @@ const StarfieldBackground = () => {
   const draw = (canvas, ctx) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw stars
     starsRef.current.forEach((star) => {
       ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
       ctx.fillRect(star.x, star.y, star.size, star.size);
@@ -85,7 +84,7 @@ const StarfieldBackground = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []);
+  });
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden">

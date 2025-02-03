@@ -23,7 +23,7 @@ const ExecuteOutput: React.FC<ExecuteProps> = ({ filename, code }) => {
             setOutput(result.error ? `Error: ${result.error}\n${result.output}` : result.output);
             setIsOutput(true);
         } catch (error) {
-            setOutput('Execution failed');
+            setOutput('Execution failed: ' + error);
         } finally {
             setIsExecuting(false);
         }

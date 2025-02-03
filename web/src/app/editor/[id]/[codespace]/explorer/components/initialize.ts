@@ -148,6 +148,7 @@ const initializeExplorer = async (db: Firestore, repo_name: string, codespace_na
         const tree = await fetchFirestoreTree(db, ownerLogin, repo_name, codespace_name);
         return tree;
     } catch (err) {
+        console.log(err);
         return "error";
     }
 };
@@ -159,6 +160,7 @@ const reload = async (db: Firestore, repo_name: string, codespace_name: string, 
         const tree = await fetchFirestoreTree(db, ownerLogin, repo_name, codespace_name);
         return tree;
     } catch (err) {
+        console.log(err);
         return "error";
     }
 }

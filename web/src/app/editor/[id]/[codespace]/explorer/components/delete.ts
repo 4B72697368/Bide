@@ -28,6 +28,7 @@ const deleteItem = async (item: { name: string; type: 'file' | 'dir'; parentPath
 
         return true;
     } catch (err) {
+        console.log(err);
         return false;
     }
 }
