@@ -10,4 +10,4 @@ It is feature rich and can:
 4. Uses Firestore to Save Your Codespaces
 5. Use Piston Execute API to Run Code in the Browser
 
-Visit (BIDE)[https://betteride.vercel.app/landing] to learn more!
+Visit [BIDE](https://betteride.vercel.app/landing) to learn more!
