@@ -23,7 +23,7 @@ function HomePage() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      redirect("/login");
+      redirect("/landing");
     }
 
     const fetchProjects = async () => {
