@@ -9,6 +9,7 @@ Bide is an opensource and lightweight web-IDE built for fast setup and developme
 3. Uses Monaco to Provide Top-Tier Intellisense
 4. Uses Firestore to Save Your Codespaces
 5. Use Piston Execute API to Run Code in the Browser
+6. Runs Python, Javascript, Typescript, Go, PHP, Bash, C++, C#, and Java
 
 ## During development,
 
